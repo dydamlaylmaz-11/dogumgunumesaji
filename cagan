@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Çağan'a Sürpriz 🎂</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(#87CEEB, #fff);
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 50px;
+    }
+
+    #countdown {
+        font-size: 80px;
+        margin-top: 20px;
+    }
+
+    #cake {
+        position: relative;
+        margin: 50px auto;
+        width: 200px;
+        height: 150px;
+        background: #ff69b4;
+        border-radius: 10px;
+        display: none;
+    }
+
+    #candle {
+        width: 10px;
+        height: 50px;
+        background: #fff;
+        position: absolute;
+        top: -50px;
+        left: 95px;
+    }
+
+    #flame {
+        width: 15px;
+        height: 20px;
+        background: orange;
+        border-radius: 50%;
+        position: absolute;
+        top: -20px;
+        left: -2px;
+        animation: flicker 0.2s infinite;
+    }
+
+    @keyframes flicker {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    #message {
+        font-size: 28px;
+        margin-top: 20px;
+        display: none;
+    }
+
+    .balloon {
+        width: 40px;
+        height: 50px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        bottom: -60px;
+        animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(0); }
+        to { transform: translateY(-110vh); }
+    }
+</style>
+</head>
+<body>
+
+<h1>İyi ki doğdun Çağan 🎉</h1>
+<div id="countdown">3</div>
+
+<div id="cake">
+    <div id="candle">
+        <div id="flame"></div>
+    </div>
+</div>
+
+<div id="message"></div>
+
+<script>
+let count = 3;
+let countdownEl = document.getElementById("countdown");
+let cake = document.getElementById("cake");
+let flame = document.getElementById("flame");
+let message = document.getElementById("message");
+
+// balon oluştur
+function createBalloon() {
+    let balloon = document.createElement("div");
+    balloon.classList.add("balloon");
+    balloon.style.left = Math.random() * window.innerWidth + "px";
+    balloon.style.background = `hsl(${Math.random()*360},70%,60%)`;
+    document.body.appendChild(balloon);
+
+    setTimeout(() => balloon.remove(), 6000);
+}
+
+setInterval(createBalloon, 500);
+
+// geri sayım
+let countdown = setInterval(() => {
+    count--;
+    countdownEl.textContent = count;
+
+    if (count === 0) {
+        clearInterval(countdown);
+        countdownEl.style.display = "none";
+        cake.style.display = "block";
+    }
+}, 1000);
+
+// muma tıklayınca söndür
+cake.addEventListener("click", () => {
+    flame.style.display = "none";
+
+    message.style.display = "block";
+    message.innerHTML = `
+        🎂 Dilek tuttun mu? <br><br>
+        Şaka şaka 😄<br>
+        Derslerine çalış, yarın okul var!
+    `;
+});
+</script>
+
+</body>
+</html>
